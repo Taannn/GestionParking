@@ -1,45 +1,47 @@
 package com.example.gestionparking.jpa;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
-
-/*@NamedQueries ({
-        @NamedQuery(name="all", query="SELECT c FROM Ticket c"),
-        @NamedQuery(name="findWithNum", query="SELECT c FROM Ticket c WHERE c.numero LIKE :partialNum ORDER BY c.numero ASC")
-})*/
 
 @Entity
 public class Paiement implements Serializable {
 
-    @Id
-    private String numero;
+    @Id @GeneratedValue
+    private long numPaiement;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date datePaiement;
+    private LocalDateTime datePaiement;
     private double montant;
-    private String typePaiement;
+    public enum TypePaiement { CB, Especes }
+    private TypePaiement typePaiement;
 
-    public Paiement(String numero, double montant) {
+    public Paiement(double montant, TypePaiement typePaiement) {
         super();
-        this.numero = numero;
+        this.datePaiement = LocalDateTime.now();
         this.montant = montant;
+        this.typePaiement = typePaiement;
     }
 
     public Paiement() {
-
     }
 
-    public String getNumero() {
-        return numero;
-    }
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public long getNumPaiement() {
+        return numPaiement;
     }
     public double getMontant() {
         return montant;
     }
     public void setMontant(double montant) {
         this.montant = montant;
+    }
+    public LocalDateTime getDatePaiement() {
+        return datePaiement;
+    }
+    public void setDatePaiement(LocalDateTime datePaiement){
+        this.datePaiement = datePaiement;
+    }
+    public void setTypePaiement(TypePaiement typePaiement){
+        this.typePaiement = typePaiement;
     }
 }

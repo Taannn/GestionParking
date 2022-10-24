@@ -1,46 +1,61 @@
 package com.example.gestionparking.jpa;
 
 import java.io.Serializable;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
 
-
-/*@NamedQueries ({
-        @NamedQuery(name="all", query="SELECT c FROM Ticket c"),
-        @NamedQuery(name="findWithNum", query="SELECT c FROM Ticket c WHERE c.numero LIKE :partialNum ORDER BY c.numero ASC")
-})*/
-
 @Entity
 public class Ticket implements Serializable {
 
-    @Id
-    private String numero;
+    public static final double prixMinute = 2.5;
+    public static final Duration dureePaiement = Duration.ofMinutes(15);
+    @Id @GeneratedValue
+    private long numTicket;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateEntree;
+    private LocalDateTime dateEntree;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dateSortie;
-    @OneToMany
-    @JoinColumn
+    private LocalDateTime dateSortie;
+    @OneToMany @JoinColumn
     private List<Paiement> paiements =new ArrayList<Paiement>();
 
-    public Ticket(String numero) {
-        super();
-        this.numero = numero;
-        this.dateEntree = new Date();
-    }
-
     public Ticket() {
-
+        super();
+        this.dateEntree = LocalDateTime.now();
+    }
+    public double montant(){
+        if(this.getPaiements().size() == 0)
+            return Duration.between(this.dateEntree ,LocalDateTime.now()).toMinutes() * prixMinute;
+        Duration depuisDernierPaiement = Duration.between(this.getPaiements().get(-1).getDatePaiement() ,LocalDateTime.now());
+        return dureePaiement.compareTo(depuisDernierPaiement) == -1 ? depuisDernierPaiement.toMinutes() * prixMinute : 0;
+    }
+    public double montantTotal(){
+        return this.getPaiements().stream().mapToDouble(i -> i.getMontant()).sum();
+    }
+    public boolean autoriserSortie(){
+        return dureePaiement.compareTo(Duration.between(this.getPaiements().get(-1).getDatePaiement() ,LocalDateTime.now())) == -1 ? false : true;
+    }
+    public Justificatif creerJustificatif(){
+        return new Justificatif(this.getNumTicket(), this.getDateEntree(), this.getPaiements().get(-1).getDatePaiement(), this.montantTotal());
     }
 
-    public String getNumero() {
-        return numero;
+    public long getNumTicket() {
+        return numTicket;
     }
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public LocalDateTime getDateEntree() {
+        return dateEntree;
+    }
+    public List<Paiement> getPaiements() {
+        return paiements;
+    }
+    public void setDateSortie(LocalDateTime dateSortie){
+        this.dateSortie = dateSortie;
+    }
+    public void addPaiement(double montant, Paiement.TypePaiement typePaiement){
+        this.paiements.add(new Paiement(montant, typePaiement));
     }
 }
 
