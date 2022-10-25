@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -28,8 +29,8 @@ public class Ticket implements Serializable {
     private Date dateEntree;
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateSortie;
-    @OneToMany @JoinColumn
-    private List<Paiement> paiements =new ArrayList<Paiement>();
+    @OneToMany(fetch = FetchType.EAGER) @JoinColumn
+    private List<Paiement> paiements = new ArrayList<Paiement>();
 
     public Ticket() {
         super();

@@ -2,17 +2,17 @@
 <html>
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Manipulation des comptes bancaires</title>
+	<title>Parking</title>
 	<link rel="stylesheet" type="text/css" href="css/base.css" >
 </head>
 <body>
-<h1>Manipulation des comptes bancaires</h1>
+<h1>Parking</h1>
 	<h2>Créer un ticket :</h2>
 	<form action="CreerTicketServlet" method="post">
 		<input type="submit" value="prendre un ticket">
 	</form>
 	<h2>Payer un ticket :</h2>
-	<form action="AfficherTicketServlet" method="post">
+	<form action="AfficherTicketPaiementServlet" method="post">
 		numéro Ticket : <input type="number" name="numTicket">
 		<input type="submit" value="payer">
 	</form>
