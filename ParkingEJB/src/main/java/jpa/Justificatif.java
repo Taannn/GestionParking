@@ -1,4 +1,4 @@
-package fr.usmb.m2isc.javaee.comptes.jpa;
+package jpa;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;

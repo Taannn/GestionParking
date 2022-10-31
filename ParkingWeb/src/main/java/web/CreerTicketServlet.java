@@ -1,4 +1,4 @@
-package fr.usmb.m2isc.javaee.comptes.web;
+package web;
 
 import java.io.IOException;
 
@@ -9,23 +9,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.usmb.m2isc.javaee.comptes.ejb.Operation;
-import fr.usmb.m2isc.javaee.comptes.jpa.Ticket;
+import ejb.Operation;
+import jpa.Ticket;
 
 /**
- * Servlet implementation class AfficherTicketPaiementServlet
+ * Servlet implementation class CreerTicketServlet
  */
-@WebServlet("/AfficherTicketPaiementServlet")
-public class AfficherTicketPaiementServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-	@EJB
-	private Operation ejb;
+@WebServlet("/CreerTicketServlet")
+public class CreerTicketServlet extends HttpServlet {
 	
+	private static final long serialVersionUID = 1L;
+	@EJB
+	private Operation op;
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AfficherTicketPaiementServlet() {
+    public CreerTicketServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,10 +34,10 @@ public class AfficherTicketPaiementServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		long numTicket = Long.parseLong(request.getParameter("numTicket"));
-		Ticket tck = ejb.getTicket(numTicket);
+		Ticket tck = op.creerTicket();
+		request.setAttribute("numTicket", tck.getNumTicket());
 		request.setAttribute("ticket", tck);
-		request.getRequestDispatcher("/AfficherTicketPaiement.jsp").forward(request, response);	
+		request.getRequestDispatcher("/AfficherTicket.jsp").forward(request, response);
 	}
 
 	/**

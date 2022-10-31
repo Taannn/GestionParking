@@ -1,31 +1,32 @@
-package fr.usmb.m2isc.javaee.comptes.web;
+package web;
 
 import java.io.IOException;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.usmb.m2isc.javaee.comptes.ejb.Operation;
-import fr.usmb.m2isc.javaee.comptes.jpa.Ticket;
+import ejb.Operation;
+import jpa.Ticket;
 
 /**
- * Servlet implementation class AfficherTicketServlet
+ * Servlet implementation class SortirTicketServlet
  */
-@WebServlet("/AfficherTicketServlet")
-public class AfficherTicketServlet extends HttpServlet {
+@WebServlet("/SortirTicketServlet")
+public class SortirTicketServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
 	private Operation ejb;
-
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AfficherTicketServlet() {
+    public SortirTicketServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,14 +37,20 @@ public class AfficherTicketServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		long numTicket = Long.parseLong(request.getParameter("numTicket"));
 		Ticket tck = ejb.getTicket(numTicket);
-		request.setAttribute("ticket", tck);
-		request.getRequestDispatcher("/AfficherTicket.jsp").forward(request, response);	
+		try {
+			ejb.validerSortie(numTicket);
+			request.setAttribute("operation", "Vous avez réussi à sortir du parking, bravo");
+	    } catch (EJBException e) {
+	    	request.setAttribute("operation", e.getMessage());
+	    }
+		request.getRequestDispatcher("/SortirParking.jsp").forward(request, response);	
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

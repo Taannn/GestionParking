@@ -13,11 +13,14 @@
 	</form>
 	<h2>Payer un ticket :</h2>
 	<form action="AfficherTicketPaiementServlet" method="post">
+		<p>Scannez votre ticket</p>
 		numéro Ticket : <input type="number" name="numTicket">
 		<input type="submit" value="payer">
 	</form>
 	<h2>Sortir du parking :</h2>
-	<form action="CreerTicketServlet" method="post">
+	<form action="SortirTicketServlet" method="post">
+		<p>Scannez votre ticket</p>
+		numéro Ticket : <input type="number" name="numTicket">
 		<input type="submit" value="partir du parking">
 	</form>
 </body>

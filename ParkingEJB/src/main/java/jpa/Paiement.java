@@ -1,10 +1,8 @@
-package fr.usmb.m2isc.javaee.comptes.jpa;
+package jpa;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

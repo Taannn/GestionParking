@@ -1,4 +1,4 @@
-package fr.usmb.m2isc.javaee.comptes.web;
+package web;
 
 import java.io.IOException;
 
@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.usmb.m2isc.javaee.comptes.ejb.Operation;
-import fr.usmb.m2isc.javaee.comptes.jpa.Ticket;
-import fr.usmb.m2isc.javaee.comptes.jpa.Paiement;
+import ejb.Operation;
+import jpa.Ticket;
+import jpa.Paiement;
 
 /**
  * Servlet implementation class PayerTicketServlet
@@ -37,15 +37,9 @@ public class PayerTicketServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		long numTicket = Long.parseLong(request.getParameter("numTicket"));
 		Ticket tck = ejb.getTicket(numTicket);
-		switch(request.getParameter("moyenPaiement")) {
-			case "CB":
-				tck = ejb.payerTicket(numTicket, Paiement.TypePaiement.CB);
-				break;
-			case "ES":
-				tck = ejb.payerTicket(numTicket, Paiement.TypePaiement.Especes);
-				break;
-		}
+		tck = ejb.payerTicket(numTicket, Paiement.TypePaiement.valueOf(request.getParameter("moyenPaiement")));
 		request.setAttribute("ticket", tck);
+		request.setAttribute("aPaye", tck.getPaiements().size() != 0);
 		request.getRequestDispatcher("/AfficherTicketPaiement.jsp").forward(request, response);
 	}
 
