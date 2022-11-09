@@ -1,27 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="ISO-8859-1">
+	<meta charset="UTF-8">
 	<title>Parking</title>
+	<link rel="icon" type="image/png" href="https://cdn.icon-icons.com/icons2/72/PNG/256/car_14444.png"/>
 	<link rel="stylesheet" type="text/css" href="css/base.css" >
 </head>
 <body>
-<h1>Parking</h1>
-	<h2>Créer un ticket :</h2>
-	<form action="CreerTicketServlet" method="post">
-		<input type="submit" value="prendre un ticket">
-	</form>
-	<h2>Payer un ticket :</h2>
-	<form action="AfficherTicketPaiementServlet" method="post">
-		<p>Scannez votre ticket</p>
-		numéro Ticket : <input type="number" name="numTicket">
-		<input type="submit" value="payer">
-	</form>
-	<h2>Sortir du parking :</h2>
-	<form action="SortirTicketServlet" method="post">
-		<p>Scannez votre ticket</p>
-		numéro Ticket : <input type="number" name="numTicket">
-		<input type="submit" value="partir du parking">
-	</form>
+	<div class="parking">
+		<div class="borne">
+			<div class="screen">
+				<form action="CreerTicketServlet" method="post">
+					<input type="submit" value="prendre un ticket">
+				</form>
+			</div>
+		</div>
+		<div class="borne">
+			<div class="screen">
+				<form action="AfficherTicketPaiementServlet" method="post">
+					<label for="numTicket">Scannez votre ticket</label>
+					<input type="number" name="numTicket">
+					<input type="submit" value="payer un ticket">
+				</form>
+			</div>
+		</div>
+		<div class="borne">
+			<div class="screen">
+				<form action="SortirTicketServlet" method="post">
+					<label for="numTicket">Scannez votre ticket</label>
+					<input type="number" name="numTicket">
+					<input type="submit" value="partir du parking">
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
