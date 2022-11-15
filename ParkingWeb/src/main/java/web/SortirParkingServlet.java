@@ -14,10 +14,10 @@ import ejb.Operation;
 import jpa.Ticket;
 
 /**
- * Servlet implementation class SortirTicketServlet
+ * Servlet implementation class SortirParkingServlet
  */
-@WebServlet("/SortirTicketServlet")
-public class SortirTicketServlet extends HttpServlet {
+@WebServlet("/SortirParkingServlet")
+public class SortirParkingServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	@EJB
@@ -26,7 +26,7 @@ public class SortirTicketServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SortirTicketServlet() {
+    public SortirParkingServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
